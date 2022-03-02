@@ -20,7 +20,6 @@ __pycache__
 build
 dist
 dist/dash_app
-images
 RBH_app
 update.sh
 
