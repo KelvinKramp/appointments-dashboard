@@ -1,7 +1,7 @@
 # RijbewijskeuringenHolland
 
 ## Screenshot
-![Rijbewijsholland](images/125164774-31b09e80-e194-11eb-8fe5-c27e1579363c.png)
+![Rijbewijsholland](images/Screenshot.png)
 
 ## Flowchart
 ![Rijbewijsholland](images/Agenda.png)
