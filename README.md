@@ -1,4 +1,4 @@
-# RijbewijskeuringenHolland
+# Client agenda in Dash
 
 ## Screenshot
 ![Rijbewijsholland](images/Screenshot.png)
