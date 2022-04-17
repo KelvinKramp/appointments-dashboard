@@ -1,7 +1,7 @@
 from cryptography.fernet import Fernet
 import keyring
 from dotenv import load_dotenv
-
+from dev_switch import dev_switch
 
 load_dotenv()
 generated_key = str(Fernet.generate_key())[2:-1]
@@ -13,11 +13,11 @@ def load_key():
     """
     Load the previously generated key
     """
-    # key = keyring.get_password("system", "username")
-    key = None
-    if not key:
+    if dev_switch:
         # use generated fake key
-        key = generated_key
+        key = 'lKgtB0ZlND2CSbeZUS5ACfP10JKuXkYyVWnXajI8lx0='
+    else:
+        key = keyring.get_password("system", "username")
     return key
 
 
