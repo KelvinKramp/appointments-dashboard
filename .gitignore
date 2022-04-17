@@ -5,7 +5,6 @@ venv
 .ipynb_checkpoints
 config/browsersession.txt
 config/loggings.json
-modules/app_connection.py
 Untitled.ipynb
 test_csv_file.csv
 config/secrets.json

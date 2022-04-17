@@ -1,5 +1,3 @@
-from modules.app_connection import *
-from modules.encryption import *
 
 # PARSE TABLE INFO AND GET COLOR AND ORGANISATION
 def define_color(df_4_color, row_number_client): # could raise issues in case that row_number_client = -1
