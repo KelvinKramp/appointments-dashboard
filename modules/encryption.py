@@ -12,7 +12,8 @@ def load_key():
     """
     Load the previously generated key
     """
-    key = keyring.get_password("system", "username")
+    # key = keyring.get_password("system", "username")
+    key = None
     if not key:
         # use generated fake key
         key = generated_key
