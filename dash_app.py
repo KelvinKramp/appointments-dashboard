@@ -175,6 +175,8 @@ df = empty_dataframe()
 ########################################################################################################################
 # THE APP LAYOUT
 app = dash.Dash(__name__, external_stylesheets=[dbc.themes.COSMO])
+app.title = 'Appointments dashboard'
+server = app.server
 app.layout = html.Div(
     style={'textAlign': 'center', 'margin': 'auto'},
     children=[
