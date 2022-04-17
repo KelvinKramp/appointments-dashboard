@@ -8,6 +8,7 @@ generated_key = str(Fernet.generate_key())[2:-1]
 
 # ENCRYPTING FROM https://devqa.io/encrypt-decrypt-data-python/
 
+
 def load_key():
     """
     Load the previously generated key
@@ -18,6 +19,7 @@ def load_key():
         # use generated fake key
         key = generated_key
     return key
+
 
 def encrypt_message(message):
     """
@@ -30,6 +32,7 @@ def encrypt_message(message):
 
     return encrypted_message
 
+
 def decrypt_message(encrypted_message):
     """
     Decrypts an encrypted message
@@ -39,6 +42,7 @@ def decrypt_message(encrypted_message):
     decrypted_message = f.decrypt(encrypted_message)
 
     return decrypted_message.decode()
+
 
 if __name__ == "__main__":
     # m = decrypt_message(b"gAAAAABhGgq6EOcbszKzW7KuYq8-Ns8mZGEnqj051zWeR4-wUT5Clq51JD-2sZ-EDDKEVdZ3QuHCjtjVKGkmBA3CPcfpG0Mszg==")
