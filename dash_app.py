@@ -809,7 +809,7 @@ def e_mail_comments(data, send, close_button, text, is_open):
         df = pd.DataFrame(data)
         df.to_excel(path_dir+download_excell_filename)
         file = path_dir+download_excell_filename
-        send_email(str(text), file)
+        # send_email(str(text), file)
         os.remove(file)
         return True, True
     if close_button:
