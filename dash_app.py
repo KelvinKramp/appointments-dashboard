@@ -11,6 +11,7 @@ import pandas as pd
 from datetime import datetime as dt
 from datetime import date
 from modules.create_test_sample import create_test_sample
+from modules import create_empty_secrets_file
 from modules import download_wp_agenda
 from modules.perf_var_calc import perf_var_calc
 from modules.app_connection import *
@@ -82,17 +83,6 @@ with open(secrets) as f:
 ########################################################################################################################
 ########################################################################################################################
 # FUNCTIONS
-def create_empty_secrets_json_file():
-    data = {
-            "username_1": empty_byte_string,
-            "password_1": empty_byte_string,
-            "username_WP": empty_byte_string,
-            "password_WP": empty_byte_string,
-            "email_email_comments": empty_byte_string,
-            "password_email_comments": empty_byte_string,
-            "email_receive_comments": empty_byte_string}
-    with open(os.path.join(ROOT_DIR,"config", "secrets.json"), 'w') as f:
-        json.dump(data, f)
 
 
 def quit_dash_app():
@@ -166,19 +156,18 @@ def read_data():
 ########################################################################################################################
 # DEFINE VARIABLES
 
-# IF SECRETS FILE IS EMPTY START WITH MODAL WINDOW FOR ENTERING USER INFO
-if str(decrypt_message(secret["username_WP"].encode('utf-8'))) == "":
-    bool_user_info = True
-else:
-    bool_user_info = False
-
 # READ WHETHER IN TEST-ENVIRONMENT
 testenv_file = os.path.join(path_dir,'testenv.json')
 with open(testenv_file) as f:
     testenv = json.load(f)
 dev_switch = eval(testenv["state"])
 
-create_empty_secrets_json_file()
+# IF SECRETS FILE IS EMPTY START WITH MODAL WINDOW FOR ENTERING USER INFO
+if (str(decrypt_message(secret["username_WP"].encode('utf-8'))) == "") and not dev_switch:
+    bool_user_info = True
+else:
+    bool_user_info = False
+
 download_excell_filename = "output.xlsx"
 df = empty_dataframe()
 
