@@ -12,6 +12,7 @@ import os
 import datetime
 from modules import datetime_management
 from definitions import ROOT_DIR
+from config.wordpress import *
 
 import sys
 if getattr(sys, 'frozen', False):
@@ -28,20 +29,7 @@ secrets = path_dir+'/secrets.json'
 with open(secrets) as f:
     secret = json.load(f)
 
-
-########################################################################################################################
-# DEFINE VARIABLES
-########################################################################################################################
-url = "https://rijbewijskeuringholland.nl/wp-admin/admin-ajax.php?action=bookly_staff_cabinet_export_appointments"
-inlog_url = "https://rijbewijskeuringholland.nl/wp-login.php?loggedout=true&wp_lang=nl_NL"
-agenda_webpage = "https://rijbewijskeuringholland.nl/agenda/"
-x_path_1 = "/html/body/div[3]/span/div/div[2]/a[2]"
-x_path_2 = "/html/body/div[2]/div/div/div/main/article/div/div/div/div/section[2]/div/div/div/div/div/div/div/div/div/div[3]/div[1]/button"
-x_path_3 = "/html/body/div[2]/div/div/div/main/article/div/div/div/div/section[2]/div/div/div/div/div/div/div/div/div/div[4]/div/form/div/div[3]/button/span"
-x_path_reactiva = "/html/body/zd-root/zd-select-role/zd-single-card-page/zd-application/zd-application-main/div/zd-application-main-content/div/div/zd-card/div[2]/zd-single-card-page-content/zd-card-section/form/div[1]/zd-form-group/div[2]/zd-form-radio-group/div/div/zd-form-radio-group-option/zd-form-radio/div/label"
-x_path_RBH = "/html/body/zd-root/zd-select-role/zd-single-card-page/zd-application/zd-application-main/div/zd-application-main-content/div/div/zd-card/div[2]/zd-single-card-page-content/zd-card-section/form/div[2]/zd-form-group/div[2]/zd-form-radio-group/div/div/zd-form-radio-group-option/zd-form-radio/div/label"
 downloads_path = os.path.join(ROOT_DIR, "downloads")
-
 
 ########################################################################################################################
 # FUNCTIONS
