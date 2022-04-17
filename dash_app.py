@@ -25,7 +25,7 @@ import os.path
 from browser.connect_browser import connect_browser
 from modules import datetime_management
 from modules import client_selection
-from definitions import ROOT_DIR
+from definitions import ROOT_DIR, empty_byte_string
 import modules.app_connection as app_connection
 from dateutil import parser
 
@@ -82,6 +82,17 @@ with open(secrets) as f:
 ########################################################################################################################
 ########################################################################################################################
 # FUNCTIONS
+def create_empty_secrets_json_file():
+    data = {
+            "username_1": empty_byte_string,
+            "password_1": empty_byte_string,
+            "username_WP": empty_byte_string,
+            "password_WP": empty_byte_string,
+            "email_email_comments": empty_byte_string,
+            "password_email_comments": empty_byte_string,
+            "email_receive_comments": empty_byte_string}
+    with open(os.path.join(ROOT_DIR,"config", "secrets.json"), 'w') as f:
+        json.dump(data, f)
 
 
 def quit_dash_app():
@@ -167,7 +178,7 @@ with open(testenv_file) as f:
     testenv = json.load(f)
 dev_switch = eval(testenv["state"])
 
-
+create_empty_secrets_json_file()
 download_excell_filename = "output.xlsx"
 df = empty_dataframe()
 
@@ -393,7 +404,7 @@ app.layout = html.Div(
                             value=str(decrypt_message(secret["password_WP"].encode('utf-8'))),
                         ),
                         html.Div(""),
-                        html.H5("E-mail adres voor verzenden van opmerkingen"),
+                        html.H5("E-mail address to send comments to"),
                         dcc.Input(
                             id="email_receive_comments",
                             type='email',
@@ -568,8 +579,8 @@ def user_info(user_info, close6, username_1, password_1, username_2, password_2,
         secrets_file = ROOT_DIR +'/config/secrets.json'
         data = {"username_1": str(encrypt_message(username_1).decode("utf-8")), "password_1": str(encrypt_message(password_1).decode("utf-8") ),
                 "username_WP": str(encrypt_message(username_2).decode("utf-8")), "password_WP": str(encrypt_message(password_2).decode("utf-8") ),
-                "email_email_comments": "gAAAAABhF2qcSpZApFq8hcTtW7BBoMmSMAMxBWI2kWq09Px-QBhSl8BfTy4A5ruiRo2NCVO7BYkDQZ6MxKuK586Vd9GtJT2cxIl2P8rTGiVRXi-eVd3z51A=",
-                "password_email_comments": "gAAAAABhFX1lyDiw6esHHxVVBpUGkrarxHjKrowAGDVaMJDfPGUVyb7pHDLOpjURM5_MfWABFE2Xfawd5SdTj4Vc0as2Wjd3pw==",
+                "email_email_comments": empty_byte_string,
+                "password_email_comments": empty_byte_string,
                 "email_receive_comments": str(encrypt_message(email_receive_comments).decode("utf-8")),
                 }
         with open(secrets_file, 'w') as f:
@@ -823,4 +834,7 @@ def e_mail_comments(data, send, close_button, text, is_open):
 ########################################################################################################################
 # THE RUN APPLICATION COMMAND
 if __name__ == '__main__':
-    app.run_server(host='0.0.0.0', port=8080, debug=True, use_reloader=True)
+    if dev_switch==True:
+        app.run_server(host='0.0.0.0', port=8080, debug=True, use_reloader=True)
+    else:
+        app.run_server(host='0.0.0.0', port=8080, debug=False, use_reloader=True)
