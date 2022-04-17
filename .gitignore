@@ -8,7 +8,6 @@ config/loggings.json
 Untitled.ipynb
 test_csv_file.csv
 config/secrets.json
-config/testenv.json
 output.xlsx
 loggings.json
 browsersession.txt
