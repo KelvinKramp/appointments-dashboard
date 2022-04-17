@@ -6,7 +6,8 @@ from browser.connect_browser import connect_browser
 from modules.encryption import *
 import sys
 from definitions import ROOT_DIR
-
+import os
+import json
 
 if getattr(sys, 'frozen', False):
     path_dir = str(os.path.dirname(sys.executable))
@@ -27,8 +28,8 @@ login_page = "..."
 select_orga_page = "..."
 username_box = "..."
 password_box = "..."
-username = decrypt_message(secret["username_1"].encode('utf-8'))
-password = decrypt_message(secret["password_1"].encode('utf-8'))
+username = "..."
+password = "..."
 inlog_button = "..."
 reactiva = "..."
 RBH = "..."

@@ -1,20 +1,21 @@
-import re
 from cryptography.fernet import Fernet
 import keyring
-import os
-import json
 from dotenv import load_dotenv
 
-load_dotenv()
 
-# DEFINE FUNCTIONS FOR ENCRYPTING FROM https://devqa.io/encrypt-decrypt-data-python/
+load_dotenv()
+generated_key = str(Fernet.generate_key())[2:-1]
+
+# ENCRYPTING FROM https://devqa.io/encrypt-decrypt-data-python/
+
 def load_key():
     """
     Load the previously generated key
     """
-    key = os.environ.get("PASSWORD")
+    key = keyring.get_password("system", "username")
     if not key:
-        key = "FAKE_PASSWORD"
+        # use generated fake key
+        key = generated_key
     return key
 
 def encrypt_message(message):
@@ -39,4 +40,8 @@ def decrypt_message(encrypted_message):
     return decrypted_message.decode()
 
 if __name__ == "__main__":
+    # m = decrypt_message(b"gAAAAABhGgq6EOcbszKzW7KuYq8-Ns8mZGEnqj051zWeR4-wUT5Clq51JD-2sZ-EDDKEVdZ3QuHCjtjVKGkmBA3CPcfpG0Mszg==")
+    # print(m)
+    # m = encrypt_message("TEST")
+    # print(m)
     pass

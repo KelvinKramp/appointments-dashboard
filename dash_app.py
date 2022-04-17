@@ -1,6 +1,7 @@
 ########################################################################################################################
 ########################################################################################################################
 # IMPORT MODULES
+from definitions import ROOT_DIR, empty_byte_string
 import dash
 from dash import html
 from dash.dependencies import Input, Output, State
@@ -26,9 +27,9 @@ import os.path
 from browser.connect_browser import connect_browser
 from modules import datetime_management
 from modules import client_selection
-from definitions import ROOT_DIR, empty_byte_string
 import modules.app_connection as app_connection
 from dateutil import parser
+import json
 
 ########################################################################################################################
 ########################################################################################################################
@@ -637,23 +638,19 @@ def change_switch(switch):
 )
 def load_clients(n1, n2, date_picker_output, test, is_open):
     ctx = dash.callback_context
-    print(ctx.triggered)
     # print(ctx.triggered)
     interaction_id = ctx.triggered[0]['prop_id'].split('.')[0]
 
     df_filtered = empty_dataframe()
-    print(interaction_id)
+    # print(interaction_id)
     # CREATE EMPTY DATAFRAME AT INITALIZATION
     if not n1 and not n2 and not interaction_id == "test":
-        print("first")
         df_filtered = empty_dataframe()
         return is_open, df_filtered.to_dict('records'), ""
 
     # LOAD TEST SAMPLE IF TEST
     if interaction_id == "test":
-        print(date_picker_output)
         df = get_data(date_picker_output)
-        print(df.head())
         return is_open, df.to_dict('records'), ""
 
     # OTHERWISE LOAD CLIENTS LIST AND OPEN MODAL WINDOW
@@ -669,9 +666,7 @@ def load_clients(n1, n2, date_picker_output, test, is_open):
 
     # RENEW TABLE AT DATE CHANGE
     elif interaction_id == "output-container-date-picker-single":
-        print(date_picker_output)
         df_filtered = get_data(date_picker_output)
-        print(df_filtered.head())
         return is_open, df_filtered.to_dict('records'), ""
 
     else:

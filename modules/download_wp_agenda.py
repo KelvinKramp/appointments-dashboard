@@ -13,6 +13,7 @@ import datetime
 from modules import datetime_management
 from definitions import ROOT_DIR
 from config.wordpress import *
+import json
 
 import sys
 if getattr(sys, 'frozen', False):

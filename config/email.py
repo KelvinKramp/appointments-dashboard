@@ -4,6 +4,8 @@ import json
 import sys
 from definitions import ROOT_DIR
 from email.mime.multipart import MIMEMultipart
+import os
+
 
 # DEFINE PATH
 if getattr(sys, 'frozen', False):
