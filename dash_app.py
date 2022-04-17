@@ -144,6 +144,13 @@ def get_data(date_picker_output):
         df = datetime_management.filter_df_on_date(df, date_picker_output)
         return df
 
+
+def read_data():
+    df = pd.read_csv("test_csv_file.csv")
+    df = df.loc[:, ~df.columns.str.contains('^Unnamed')]
+    return df
+
+
 ########################################################################################################################
 ########################################################################################################################
 # DEFINE VARIABLES
@@ -161,31 +168,13 @@ with open(testenv_file) as f:
 dev_switch = eval(testenv["state"])
 
 
-row_number_client = 0
-
-clear_old, n_clicks1_old, n_clicks2_old, date_picker_output_old = 0, 0, 0, 0
-global load_last_client_button_old, next_button_old, previous_button_old, next_button, previous_button, color, n1, n2, n1_old, n2_old # bad idea to use globals in dash app, but dont know how to circumvent
-load_last_client_button_old, next_button_old, previous_button_old, next_button, previous_button, n1, n2, n1_old, n2_old, send_button_old, user_info_button_old, close6_button_old = 0, 0, 0, 0, 0, 0, 0, 0, 0,0, 0,0
-send_email_developer_button_old, report_bug_button_old, close7_button_old = 0,0,0
-
-
 download_excell_filename = "output.xlsx"
 df = empty_dataframe()
-init_styling = [
-        {
-            'if': {
-                'row_index': row_number_client,
-            },
-            'backgroundColor': 'transparent',
-            'color': 'white',
-        },
-
-    ]
 
 ########################################################################################################################
 ########################################################################################################################
 # THE APP LAYOUT
-app = dash.Dash(__name__, external_stylesheets=[dbc.themes.FLATLY])
+app = dash.Dash(__name__, external_stylesheets=[dbc.themes.COSMO])
 app.layout = html.Div(
     style={'textAlign': 'center', 'margin': 'auto'},
     children=[
@@ -259,7 +248,7 @@ app.layout = html.Div(
                 ],
                 data=df.to_dict('records'),
                 style_cell={'font-family':'Source Sans Pro'},
-                style_data_conditional=init_styling,
+                style_data_conditional=[],
             ),],
             style={
                 "display": "inline-block",
@@ -446,7 +435,7 @@ app.layout = html.Div(
         # REFRESH THE TABLE EVERY X SECONDS
         dcc.Interval(
                 id='interval-component',
-                interval=1 * 5000,  # refresh rate of the table in milliseconds
+                interval=1 * 500,  # refresh rate of the table in milliseconds
                 n_intervals=0
             ),
 
@@ -632,7 +621,7 @@ def change_switch(switch):
         return "Testenvironment ON"
 
 
-# LOAD CLIENTS FROM CSV OR ELSEWHERE
+# LOAD CLIENTS FROM CSV, WORDPRESS OR ELSEWHERE
 @app.callback(
     [Output("modal2", "is_open"),
      Output('table-client-info', 'data'),
@@ -716,7 +705,7 @@ def update_table(next, previous, interval, selected_cells, date_picker_output, a
                 'client number': active_row})  # this will only work if you go forward in the list
 
     # GET DATAFRAME
-    df_new_filtered = get_data(date_picker_output)
+    df_new_filtered = read_data()
 
     # CLICK BUTTON LOGIC
     if interaction_id == "table-client-info":
@@ -767,10 +756,10 @@ def update_table(next, previous, interval, selected_cells, date_picker_output, a
                 active_row = int(active_row + 1)
                 color, orga = client_selection.define_color(df_new_filtered, active_row)
     else:
-        if df_new_filtered.isnull().values.any() or (not (len(df_new_filtered))):
-            color = 'white'
-        else:
-            color, orga = client_selection.define_color(df_new_filtered, active_row)
+        # if df_new_filtered.isnull().values.any() or (not (len(df_new_filtered))):
+        #     color = 'transparent'
+        # else:
+        color, orga = client_selection.define_color(df_new_filtered, active_row)
 
     # ADJUST TABLE FORMATTING
     new_style = [
