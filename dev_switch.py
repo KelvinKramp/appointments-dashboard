@@ -1,1 +1,1 @@
-dev_switch = False
+dev_switch = True

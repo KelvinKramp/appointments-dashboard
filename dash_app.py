@@ -211,7 +211,7 @@ app.layout = html.Div(
                 display_format='D-M-Y',
                 date=dt.now(),
             ),
-            dbc.Button("Quit", id='quit'),
+            # dbc.Button("Quit", id='quit'),
         ],
             no_gutters=False,
             style={
@@ -510,12 +510,12 @@ def update_output(date_value):
 
 
 # QUIT BUTTON
-@app.callback(
-    Output('output-quit-button', 'children'),
-    [Input('quit', 'n_clicks')])
-def quit(quit_button_click):
-    if quit_button_click:
-        quit_dash_app()
+# @app.callback(
+#     Output('output-quit-button', 'children'),
+#     [Input('quit', 'n_clicks')])
+# def quit(quit_button_click):
+#     if quit_button_click:
+#         quit_dash_app()
 
 
 # TEST INFO MODAL WINDOW
@@ -646,29 +646,30 @@ def change_switch(switch):
 )
 def load_clients(n1, n2, date_picker_output, test, is_open):
     ctx = dash.callback_context
+    print(ctx.triggered)
     # print(ctx.triggered)
     interaction_id = ctx.triggered[0]['prop_id'].split('.')[0]
 
-    df_filtered = get_data(date_picker_output)
-
+    df_filtered = empty_dataframe()
+    print(interaction_id)
     # CREATE EMPTY DATAFRAME AT INITALIZATION
-    if not n1 and not n2 and not (interaction_id != "test"):
+    if not n1 and not n2 and not interaction_id == "test":
+        print("first")
         df_filtered = empty_dataframe()
         return is_open, df_filtered.to_dict('records'), ""
 
     # LOAD TEST SAMPLE IF TEST
     if interaction_id == "test":
+        print(date_picker_output)
         df = get_data(date_picker_output)
+        print(df.head())
         return is_open, df.to_dict('records'), ""
 
     # OTHERWISE LOAD CLIENTS LIST AND OPEN MODAL WINDOW
     elif interaction_id == "login":
-        Timer(1, open_tab).start()
-        df_filtered = get_data(date_picker_output)
-        color, orga = client_selection.define_color(df_filtered, row_number_client)
-        if not dev_switch:
-            select_orga(orga)
-        return (not is_open), df_filtered.to_dict('records'), ""
+        print("Do some function to get all the appointments in a dataframe")
+        df = get_data(date_picker_output)
+        return is_open, df.to_dict('records'), ""
 
     # CLOSE MODAL WINDWO
     elif interaction_id == "close2":
@@ -677,10 +678,13 @@ def load_clients(n1, n2, date_picker_output, test, is_open):
 
     # RENEW TABLE AT DATE CHANGE
     elif interaction_id == "output-container-date-picker-single":
+        print(date_picker_output)
         df_filtered = get_data(date_picker_output)
+        print(df_filtered.head())
         return is_open, df_filtered.to_dict('records'), ""
 
     else:
+        print("end if else statement")
         return is_open, df_filtered.to_dict('records'), ""
 
 

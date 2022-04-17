@@ -99,7 +99,7 @@ def create_test_sample(n=16):
 
     # SAVE DF AS CSV FILE
     df.to_csv("test_csv_file.csv")
-    print("new csv file created")
+    # print("new csv file created")
     return df
 
 
