@@ -21,4 +21,5 @@ dist
 dist/dash_app
 RBH_app
 update.sh
+test
 
