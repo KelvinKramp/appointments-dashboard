@@ -3,14 +3,16 @@ from cryptography.fernet import Fernet
 import keyring
 import os
 import json
+from dotenv import load_dotenv
 
+load_dotenv()
 
 # DEFINE FUNCTIONS FOR ENCRYPTING FROM https://devqa.io/encrypt-decrypt-data-python/
 def load_key():
     """
     Load the previously generated key
     """
-    key = keyring.get_password("system", "username")
+    key = os.environ.get("PASSWORD")
     return key
 
 def encrypt_message(message):
